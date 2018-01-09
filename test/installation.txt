@@ -1,0 +1,14 @@
+1. apt-get update unable to resolve: https://development.robinwinslow.uk/2016/06/23/fix-docker-networking-dns/
+
+
+2. For nvidia driver/hardware acceleration issues: https://github.com/facontidavide/ros-docker-gazebo
+
+3. need to pull nvidia image same version setup as host: (for driver) sudo apt-get install nvidia-370 (or find your version through nvidia-smi)
+
+4. might need the right version of cuda: sudo apt-get install nvidia/cuda:8.0-cudnn7-runtime-ubuntu16.04
+
+5. nvidia-docker2 doesn't work with gazebo/rviz at the moment http://wiki.ros.org/docker/Tutorials/Hardware%20Acceleration
+
+6. after sudo apt-get install nvidia-docker nvidia-mdprobe, run sudo service nvidia-docker start
+
+7. can also consider connecting from host to container through gzclient https://hub.docker.com/_/gazebo/

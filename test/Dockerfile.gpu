@@ -34,15 +34,18 @@ ENV USER ${USER}
 # Set working directory
 WORKDIR "/home/${USER}"
 
-# update software repo
-RUN apt-get update
 
-# install tools
-RUN apt-get install -y emacs24 \
-                       terminator \
-                       wget \
-                       net-tools
-# update gcc
+#################
+# install tools #
+#################
+RUN apt-get update && apt-get install -y emacs24 \
+                                         terminator \
+                                         wget \
+                                         net-tools \
+                                         mesa-utils
+##############
+# update gcc #
+##############
 RUN apt-get install -y  build-essential software-properties-common && \
                         add-apt-repository ppa:ubuntu-toolchain-r/test && \
                         apt-get update && \
@@ -55,7 +58,9 @@ RUN apt-get install -y  build-essential software-properties-common && \
 
 RUN update-alternatives --config gcc
 
-# install ros packages
+########################
+# install ros packages #
+########################
 RUN apt-get install -y ros-kinetic-gazebo-ros-pkgs \
                        ros-kinetic-qt-build \
                        ros-kinetic-gazebo-ros-control\
@@ -80,15 +85,6 @@ RUN echo "source /opt/ros/kinetic/setup.bash" >> /root/.bashrc && \
 # COPY /root/.bashrc /home/${USER}/.bashrc
 
 
-#########################
-# Install Nvidia Driver #
-#########################
-
-RUN apt-get purge nvidia* &&\
-    add-apt-repository ppa:graphics-drivers && \
-    apt-get update && \
-    apt-get install nvidia-370
-
 ######################
 # Install Tensorflow #
 ######################
@@ -105,10 +101,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python-dev \
     rsync \
     software-properties-common \
-    unzip \
-    && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    unzip && \
+    apt-get clean
+    # rm -rf /var/lib/apt/lists/*
 
 
 RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
@@ -131,7 +126,24 @@ RUN pip --no-cache-dir install \
 # Install TensorFlow CPU version from central repo
 # RUN pip --no-cache-dir install \
 #   http://storage.googleapis.com/tensorflow/linux/${TENSORFLOW_ARCH}/tensorflow-${TENSORFLOW_VERSION}-cp27-none-linux_x86_64.whl
-RUN pip install tensorflow
+
+# TODO: this is currently not controllable and is tf1.4, make use of the TENSORFLOW_VERSION argument
+RUN pip install tensorflow 
+
+
+#######################
+# Nvidia docker hooks #
+#######################
+
+# nvidia-docker hooks
+LABEL com.nvidia.volumes.needed="nvidia_driver"
+ENV PATH /usr/local/nvidia/bin:${PATH}
+ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64:${LD_LIBRARY_PATH}
+
+RUN wget https://sourceforge.net/projects/virtualgl/files/2.5.2/virtualgl_2.5.2_amd64.deb /download -O vgl.deb && \
+    dpkg -i vgl.deb && \                                                              
+    rm vgl.deb  
+
 
 # Expose ports for Tensorboard (6006), Ipython (8888)
 EXPOSE 6006 8888
