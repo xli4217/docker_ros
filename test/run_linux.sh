@@ -15,7 +15,7 @@ nvidia-docker run -it --rm \
 --env="QT_X11_NO_MITSHM=1"  \
 --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
 --workdir="/home/$USER" \
---volume="/home/$USER:/home/$USER" \
+--volume="$DOCKER_DIR/docker_home/:/home/$USER/" \
 --volume="/etc/group:/etc/group:ro" \
 --volume="/etc/passwd:/etc/passwd:ro" \
 --volume="/etc/shadow:/etc/shadow:ro" \
@@ -25,7 +25,7 @@ nvidia-docker run -it --rm \
 -e LOCAL_GROUP_NAME=`id -gn $USER` \
 --name ros_test ros_test
 
-#--volume="$DOCKER_DIR/docker_home/:/home/$USER/" \
+#--volume="/home/$USER:/home/$USER" \
 
 # docker run -it \
 #        --rm \
