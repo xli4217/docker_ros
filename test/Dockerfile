@@ -74,7 +74,7 @@ RUN apt-get install -y ros-kinetic-gazebo-ros-pkgs \
 # Putting stuff in bashrc
 RUN echo "source /opt/ros/kinetic/setup.bash" >> /root/.bashrc && \
     echo "alias em='emacs -nw'" >> /root/.bashrc && \
-    echo "source $HOME/baxter_ws/src/baxter_learn_pkgs/rlfps/setup_pythonpath.sh" >> /root/.bashrc
+    echo "source $HOME/rlfps/setup_pythonpath.sh" >> /root/.bashrc
     
 # copy bashrc
 # COPY /root/.bashrc /home/${USER}/.bashrc
@@ -125,6 +125,7 @@ RUN pip --no-cache-dir install \
         pandas \
         scipy \
         sklearn \
+        joblib \
         && \
    python -m ipykernel.kernelspec
 
