@@ -1,6 +1,5 @@
 1. apt-get update unable to resolve: https://development.robinwinslow.uk/2016/06/23/fix-docker-networking-dns/
 
-
 2. For nvidia driver/hardware acceleration issues: https://github.com/facontidavide/ros-docker-gazebo
 
 3. need to pull nvidia image same version setup as host: (for driver) sudo apt-get install nvidia-370 (or find your version through nvidia-smi)
