@@ -1,6 +1,8 @@
 #!/bin/bash
 
-docker build --rm -t  ros_test --build-arg USER=burobotics --build-arg UID=$UID --file="Dockerfile.gpu" .
+ARCH=$1 #this can be gpu or cpu
+
+docker build --rm -t  ros_test --build-arg USER=$USER --build-arg UID=$UID --file="$ARCH/Dockerfile.$ARCH" .
 
 echo -e "-- Removing exited containers --\n"
 docker ps -a | grep Exit | cut -d ' ' -f 1 | xargs sudo docker rm
