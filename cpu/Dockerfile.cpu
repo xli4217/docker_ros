@@ -43,7 +43,9 @@ RUN apt-get update && apt-get install -y emacs24 \
                                          wget \
                                          net-tools \
                                          mesa-utils \
-                                         htop
+                                         htop \
+                                         iputils-ping
+                                         
 ##############
 # update gcc #
 ##############

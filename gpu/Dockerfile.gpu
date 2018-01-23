@@ -43,7 +43,10 @@ RUN apt-get update && apt-get install -y emacs24 \
                                          wget \
                                          net-tools \
                                          mesa-utils \
-                                         htop
+                                         htop \
+                                         iputils-ping
+
+                                         
 ##############
 # update gcc #
 ##############
@@ -150,8 +153,9 @@ ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64:${LD_LIBRARY_P
 RUN pip install ray
 
 
-# Expose ports for Tensorboard (6006), Ipython (8888)
-EXPOSE 6006 8888
+# Expose ports for Tensorboard (6006), Ipython (8888), ROS (11311)
+# EXPOSE 6006 8888 11311
+EXPOSE 5000-60000
 
 # Source setup.bash
 #CMD ['source', '/opt/ros/kinetic/setup.bash']

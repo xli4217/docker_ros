@@ -11,3 +11,5 @@
 6. after sudo apt-get install nvidia-docker nvidia-mdprobe, run sudo service nvidia-docker start
 
 7. can also consider connecting from host to container through gzclient https://hub.docker.com/_/gazebo/
+
+8. might need to install avahi-daemon for .local hostname resolution
