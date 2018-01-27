@@ -166,4 +166,7 @@ RUN pip install ray
 EXPOSE 5000-60000
 
 # Source setup.bash
+SHELL ["/bin/bash", "-c"]
+RUN source /root/.bashrc
+
 #CMD ['source', '/opt/ros/kinetic/setup.bash']
