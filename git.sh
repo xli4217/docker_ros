@@ -4,7 +4,7 @@
 
 
 CMD=$1 # this can be push or pull
-WS=$2
+WS=$2 # this is the workspace name, can be 'baxter_ws', 'baxter_ws_hardware', 'parallel_baxter_ws'
 
 if [ $CMD == 'push' ] #&& [ $WS == 'baxter_ws' ]
 then
@@ -17,6 +17,18 @@ then
     git commit -m "update"
     git push origin rlfps3
 
+    if [ $WS == 'parallel_baxter_ws' ] # entire workspace needs to be pushed for this one
+    then        
+        ###########################
+        # Push parallel baxter ws #
+        ###########################
+        echo "#### Pushing parallel_baxter_ws and baxter_bridge ####"
+        cd ../parallel_baxter_ws
+        git add -A
+        git commit -m "update"
+        git push origin master
+    fi
+        
     ###################
     # Push docker_ros #
     ###################
@@ -48,7 +60,8 @@ then
     git push origin master
 
     
-elif [ $ARCH == 'pull' ]
+    
+elif [ $CMD == 'pull' ]
 then
     
     ###############

@@ -6,11 +6,14 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[ 0]}" )" && pwd )"
 
 DOCKER_DIR="$(dirname "$DIR")"
 
-# second commandline argument is the instance name
-INSTANCE_NAME=$1
+# this is the image name
+IMAGE_NAME=$1
+
+# this  is the instance name
+INSTANCE_NAME=$2
 
 # this can be cpu or gpu
-ARCH=$2
+ARCH=$3
 
 xhost +local:root
 
@@ -29,7 +32,7 @@ then
                   -e LOCAL_USER_ID=`id -u $USER` \
                   -e LOCAL_GROUP_ID=`id -g $USER` \
                   -e LOCAL_GROUP_NAME=`id -gn $USER` \
-                  --name $INSTANCE_NAME ros_test
+                  --name $INSTANCE_NAME $IMAGE_NAME
 
 
 elif [ $ARCH == 'cpu' ]
@@ -47,7 +50,7 @@ then
            -e LOCAL_USER_ID=`id -u $USER` \
            -e LOCAL_GROUP_ID=`id -g $USER` \
            -e LOCAL_GROUP_NAME=`id -gn $USER` \
-           --name $INSTANCE_NAME ros_test
+           --name $INSTANCE_NAME $IMAGE_NAME
 else
     echo "Architecture not found!"
 fi

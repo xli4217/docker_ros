@@ -152,18 +152,30 @@ ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64:${LD_LIBRARY_P
 RUN pip install ray
 
 
-########################
-# Install avahi-daemon #
-########################
+###########################################################################
+# Install avahi-daemon (cant get avahi-daemon service to start in docker) #
+###########################################################################
 
 # RUN apt-get install -y avahi-daemon && \
 #     update-rc.d avahi-daemon defaults && \
 #     sed -i '$d' /etc/default/avahi-daemon && \
 #     echo "AVAHI_DAEMON_DETECT_LOCAl=0" >> /etc/default/avahi-daemon
 
+
+
+########
+# Misc #
+########
 # Expose ports for Tensorboard (6006), Ipython (8888), ROS (11311)
 # EXPOSE 6006 8888 11311
 EXPOSE 5000-60000
+
+ENV PYTHONPATH $HOME/parallel_baxter_ws/baxter_bridge:${PYTHONPATH} 
+
+# -------------------------------------------
+# dependency for baxter bridge
+# -------------------------------------------
+RUN pip install zmq protobuf
 
 # Source setup.bash
 SHELL ["/bin/bash", "-c"]
