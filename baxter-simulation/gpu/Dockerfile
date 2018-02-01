@@ -178,7 +178,7 @@ ENV PYTHONPATH $HOME/parallel_baxter_ws/baxter_bridge:${PYTHONPATH}
 RUN pip install zmq protobuf
 
 # Source setup.bash
-SHELL ["/bin/bash", "-c"]
-RUN source /root/.bashrc
+# SHELL ["/bin/bash", "-c"]
+# RUN source /root/.bashrc
 
 #CMD ['source', '/opt/ros/kinetic/setup.bash']

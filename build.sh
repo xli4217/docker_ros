@@ -2,7 +2,7 @@
 
 ARCH=$1 # this can be "gpu" or "cpu"
 
-docker build --rm -t  baxter-simulation --build-arg USER=$USER --build-arg UID=$UID --file="baxter-simulation/$ARCH/Dockerfile" .
+docker build --rm -t  baxter-simulation-$ARCH --build-arg USER=$USER --build-arg UID=$UID --file="baxter-simulation/$ARCH/Dockerfile" .
 
 echo -e "-- Removing exited containers --\n"
 docker ps -a | grep Exit | cut -d ' ' -f 1 | xargs sudo docker rm
