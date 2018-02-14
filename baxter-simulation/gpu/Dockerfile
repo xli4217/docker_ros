@@ -84,9 +84,6 @@ RUN echo "source /opt/ros/kinetic/setup.bash" >> /root/.bashrc && \
     echo "alias em='emacs -nw'" >> /root/.bashrc && \
     echo "source $HOME/rlfps/setup_pythonpath.sh" >> /root/.bashrc
     
-# copy bashrc
-# COPY /root/.bashrc /home/${USER}/.bashrc
-
 
 ######################
 # Install Tensorflow #
@@ -178,7 +175,11 @@ ENV PYTHONPATH $HOME/parallel_baxter_ws/baxter_bridge:${PYTHONPATH}
 RUN pip install zmq protobuf
 
 # Source setup.bash
-SHELL ["/bin/bash", "-c"]
-RUN source /root/.bashrc
+# SHELL ["/bin/bash", "-c"]
+# RUN source /root/.bashrc
+
+# copy bashrc
+COPY /root/.bashrc /home/${USER}/.bashrc
+
 
 #CMD ['source', '/opt/ros/kinetic/setup.bash']

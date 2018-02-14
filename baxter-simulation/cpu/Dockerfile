@@ -144,5 +144,8 @@ RUN pip install ray
 # Expose ports for Tensorboard (6006), Ipython (8888)
 EXPOSE 6006 8888
 
+# copy bashrc
+COPY /root/.bashrc /home/${USER}/.bashrc
+
 # Source setup.bash
 #CMD ['source', '/opt/ros/kinetic/setup.bash']
