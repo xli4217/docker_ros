@@ -145,7 +145,7 @@ RUN pip install ray
 EXPOSE 6006 8888
 
 # copy bashrc
-COPY /root/.bashrc /home/${USER}/.bashrc
+RUN cp /root/.bashrc /home/${USER}/.bashrc
 
 # Source setup.bash
 #CMD ['source', '/opt/ros/kinetic/setup.bash']

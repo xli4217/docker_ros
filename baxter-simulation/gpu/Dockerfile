@@ -179,6 +179,6 @@ RUN pip install zmq protobuf
 # RUN source /root/.bashrc
 
 # copy bashrc
-COPY /root/.bashrc /home/${USER}/.bashrc
+RUN cp /root/.bashrc /home/${USER}/.bashrc
 
 #CMD ['source', '/opt/ros/kinetic/setup.bash']
