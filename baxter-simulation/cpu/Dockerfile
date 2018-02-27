@@ -44,7 +44,8 @@ RUN apt-get update && apt-get install -y emacs24 \
                                          net-tools \
                                          mesa-utils \
                                          htop \
-                                         iputils-ping
+                                         iputils-ping \
+                                         tmux
                                          
 ##############
 # update gcc #
@@ -83,9 +84,6 @@ RUN echo "source /opt/ros/kinetic/setup.bash" >> /root/.bashrc && \
     echo "alias em='emacs -nw'" >> /root/.bashrc && \
     echo "source $HOME/rlfps/setup_pythonpath.sh" >> /root/.bashrc
     
-# copy bashrc
-# COPY /root/.bashrc /home/${USER}/.bashrc
-
 
 ######################
 # Install Tensorflow #
@@ -141,11 +139,25 @@ RUN pip install tensorflow
 RUN pip install ray
 
 
-# Expose ports for Tensorboard (6006), Ipython (8888)
-EXPOSE 6006 8888
+########
+# Misc #
+########
+# Expose ports for Tensorboard (6006), Ipython (8888), ROS (11311)
+# EXPOSE 6006 8888 11311
+EXPOSE 5000-60000
+
+ENV PYTHONPATH $HOME/parallel_baxter_ws/baxter_bridge:${PYTHONPATH} 
+
+# -------------------------------------------
+# dependency for baxter bridge
+# -------------------------------------------
+RUN pip install zmq protobuf
+
+# Source setup.bash
+# SHELL ["/bin/bash", "-c"]
+# RUN source /root/.bashrc
 
 # copy bashrc
 RUN cp /root/.bashrc /home/${USER}/.bashrc
 
-# Source setup.bash
 #CMD ['source', '/opt/ros/kinetic/setup.bash']
