@@ -44,7 +44,8 @@ RUN apt-get update && apt-get install -y emacs24 \
                                          net-tools \
                                          mesa-utils \
                                          htop \
-                                         iputils-ping
+                                         iputils-ping \
+                                         tmux
 
                                          
 ##############
