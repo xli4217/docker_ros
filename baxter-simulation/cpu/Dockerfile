@@ -123,6 +123,7 @@ RUN pip --no-cache-dir install \
         joblib \
         plotly \
         gym \
+        cloudpickle \
         && \           
    python -m ipykernel.kernelspec
 
