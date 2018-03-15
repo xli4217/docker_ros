@@ -122,6 +122,7 @@ RUN pip --no-cache-dir install \
         sklearn \
         joblib \
         plotly \
+        gym \
         && \           
    python -m ipykernel.kernelspec
 
