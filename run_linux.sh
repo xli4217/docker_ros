@@ -15,6 +15,20 @@ INSTANCE_NAME=$2
 # this can be cpu or gpu
 ARCH=$3
 
+# this can be "base" or "deploy"
+IMAGE_TYPE=$4
+
+BASE_VOLUME_MAPPING="$DOCKER_DIR/docker_home/:/home/$USER/"
+DEPLOY_VOLUME_MAPPING="$DOCKER_DIR/experiments/:/root/experiments/"
+
+if [ $IMAGE_TYPE == "base" ]
+then
+    VOLUME_MAPPING=$BASE_VOLUME_MAPPING
+else
+    VOLUME_MAPPING=$DEPLOY_VOLUME_MAPPING
+fi
+
+
 xhost +local:root
 
 if [ $ARCH == 'gpu' ]
@@ -24,7 +38,7 @@ then
                   --env="QT_X11_NO_MITSHM=1"  \
                   --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
                   --workdir="/home/$USER" \
-                  --volume="$DOCKER_DIR/docker_home/:/home/$USER/" \
+                  --volume=$VOLUME_MAPPING \
                   --volume="/etc/group:/etc/group:ro" \
                   --volume="/etc/passwd:/etc/passwd:ro" \
                   --volume="/etc/shadow:/etc/shadow:ro" \
@@ -42,7 +56,7 @@ then
            --env="QT_X11_NO_MITSHM=1"  \
            --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
            --workdir="/home/$USER" \
-           --volume="$DOCKER_DIR/docker_home/:/home/$USER/" \
+           --volume=$VOLUME_MAPPING \
            --volume="/etc/group:/etc/group:ro" \
            --volume="/etc/passwd:/etc/passwd:ro" \
            --volume="/etc/shadow:/etc/shadow:ro" \

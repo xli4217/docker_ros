@@ -1,0 +1,1 @@
+1. to build deploy dockers, because of the COPY command (which can only copy files/folders in the directory where "docker build" is invoked), need to copy entire "docker_home" folder to "docker_ros", then run "./build.sh deploy cpu/gpu docker_home "
