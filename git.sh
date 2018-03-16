@@ -89,12 +89,12 @@ then
     cd ../docker_home/$WS
     WS_HOME=$PWD
 
-    # push baxter_api
+    # pull baxter_api
     echo "#### Pulling baxter_api ####"
     cd $WS_HOME/src/baxter_learn_pkgs/baxter_api
     git pull origin master
 
-    # push baxter_learn
+    # pull baxter_learn
     echo "#### Pulling baxter_learn ####"
     cd $WS_HOME/src/baxter_learn_pkgs/baxter_learn
     git pull origin master
