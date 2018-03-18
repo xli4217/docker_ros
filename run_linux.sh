@@ -18,8 +18,16 @@ ARCH=$3
 # this can be "base" or "deploy"
 IMAGE_TYPE=$4
 
+if [ "$1" == "--help" ]
+then
+    echo "Usage: ./run_linux.sh <image_name> <instance_name> <cpu/gpu> <base/deploy>"
+    exit 0
+fi
+
+
 BASE_VOLUME_MAPPING="$DOCKER_DIR/docker_home/:/home/$USER/"
 DEPLOY_VOLUME_MAPPING="$DOCKER_DIR/experiments/:/root/experiments/"
+
 
 if [ $IMAGE_TYPE == "base" ]
 then

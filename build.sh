@@ -5,6 +5,12 @@ ARCH=$2 # this can be "gpu" or "cpu"
 DOCKER_HOME_DIR=$3 # this is required for "deploy", not necessary for "base"
 
 
+if [ "$1" == "--help" ]
+then
+    echo "Usage: ./build.sh <deploy/base> <gpu/cpu> <DOCKER_HOME_DIR(this is required for deploy, not base)>"
+    exit 0
+fi
+
 if [ $IMAGE == 'base' ]
 then
     docker build --rm -t  baxter-simulation-$ARCH --build-arg USER=$USER --build-arg UID=$UID --file="baxter-simulation/base/$ARCH/Dockerfile" .
