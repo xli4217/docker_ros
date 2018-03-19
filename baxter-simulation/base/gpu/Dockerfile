@@ -124,6 +124,7 @@ RUN pip --no-cache-dir install \
         joblib \
         plotly \
         cloudpickle \
+        scikit-optimize \
         && \           
    python -m ipykernel.kernelspec
 
