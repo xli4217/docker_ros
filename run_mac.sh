@@ -18,18 +18,17 @@ ARCH=$3
 # this can be "base" or "deploy" or "rlfps"
 IMAGE_TYPE=$4
 
-RLFPS_VOLUME_MAPPING_HOST_DIR=$5
+RLFPS_VOLUME_MAPPING=$5
 
 if [ "$1" == "--help" ]
 then
-    echo "Usage: ./run_linux.sh <image_name> <instance_name> <cpu/gpu> <base/deploy/rlfps> <host dir to map rlfps/experiments>"
+    echo "Usage: ./run_linux.sh <image_name> <instance_name> <cpu/gpu> <base/deploy/rlfps> <volume mapping from in format host_dir:image_dir (currently only for rlfps)>"
     exit 0
 fi
 
 
 BASE_VOLUME_MAPPING="$DOCKER_DIR/docker_home/:/home/$USER/"
 DEPLOY_VOLUME_MAPPING="$DOCKER_DIR/experiments/:/root/experiments/"
-RLFPS_VOLUME_MAPPING="$RLFPS_VOLUME_MAPPING_HOST_DIR:/home/"
 
 
 if [ $IMAGE_TYPE == "base" ] 
