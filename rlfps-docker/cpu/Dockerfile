@@ -72,6 +72,8 @@ RUN pip --no-cache-dir install \
         gym \
         cloudpickle \
         scikit-optimize \
+        pybullet \
+        tools \
         && \           
    python -m ipykernel.kernelspec
 
@@ -97,7 +99,7 @@ RUN cp /root/.bashrc /home/${USER}/.bashrc && \
     mkdir /home/${USER}/rlfps/
 
 # Copy docker_home folder to home directory
-COPY ${DIRS_TO_COPY_ROOT}/rlfps/ /home/${USER}/rlfps/
+# COPY ${DIRS_TO_COPY_ROOT}/rlfps/ /home/${USER}/rlfps/
 
 # run the job
 # CMD ["/bin/bash", "/root/rlfps/scripts/run_job_baxter.sh"]
