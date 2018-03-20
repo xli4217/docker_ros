@@ -15,23 +15,27 @@ INSTANCE_NAME=$2
 # this can be cpu or gpu
 ARCH=$3
 
-# this can be "base" or "deploy"
+# this can be "base" or "deploy" or "rlfps"
 IMAGE_TYPE=$4
 
 if [ "$1" == "--help" ]
 then
-    echo "Usage: ./run_linux.sh <image_name> <instance_name> <cpu/gpu> <base/deploy>"
+    echo "Usage: ./run_linux.sh <image_name> <instance_name> <cpu/gpu> <base/deploy/rlfps>"
     exit 0
 fi
 
 
 BASE_VOLUME_MAPPING="$DOCKER_DIR/docker_home/:/home/$USER/"
 DEPLOY_VOLUME_MAPPING="$DOCKER_DIR/experiments/:/root/experiments/"
+RLFPS_VOLUME_MAPPING="$DOCKER_DIR/docker_home/rlfps/experiments/:/home/$USER/rlfps/experiments/"
 
 
-if [ $IMAGE_TYPE == "base" ]
+if [ $IMAGE_TYPE == "base" ] 
 then
     VOLUME_MAPPING=$BASE_VOLUME_MAPPING
+elif [ $IMAGE_TYPE == "rlfps" ]
+then
+    VOLUME_MAPPING=$RLFPS_VOLUME_MAPPING
 else
     VOLUME_MAPPING=$DEPLOY_VOLUME_MAPPING
 fi
@@ -39,7 +43,7 @@ fi
 
 xhost +local:root
 
-if [ $ARCH == 'gpu' ]
+if [ $ARCH == 'gpu' ] 
 then
     nvidia-docker run -it  --rm \
                   --env="DISPLAY"  \

@@ -1,13 +1,13 @@
 #!/bin/bash
 
-IMAGE=$1 # this can be "deploy" or "base"
+IMAGE=$1 # this can be "deploy" or "base" or "rlfps"
 ARCH=$2 # this can be "gpu" or "cpu"
-DOCKER_HOME_DIR=$3 # this is required for "deploy", not necessary for "base"
+DIRS_TO_COPY_ROOT=$3 # this is required for "deploy", not necessary for "base"
 
 
 if [ "$1" == "--help" ]
 then
-    echo "Usage: ./build.sh <deploy/base> <gpu/cpu> <DOCKER_HOME_DIR(this is required for deploy, not base)>"
+    echo "Usage: ./build.sh <deploy/base/rlfps> <gpu/cpu> <DIRS_TO_COPY_ROOT (this is required for deploy, not base)>"
     exit 0
 fi
 
@@ -17,7 +17,11 @@ then
 
 elif [ $IMAGE == 'deploy' ]
 then
-    docker build --rm -t  deploy-baxter-simulation-$ARCH --build-arg DOCKER_HOME_DIR=$DOCKER_HOME_DIR --file="baxter-simulation/deploy/$ARCH/Dockerfile" .
+    docker build --rm -t  deploy-baxter-simulation-$ARCH --build-arg DIRS_TO_COPY_ROOT=$DIRS_TO_COPY_ROOT --file="baxter-simulation/deploy/$ARCH/Dockerfile" .
+
+elif [ $IMAGE == 'rlfps' ]
+then
+    docker build --rm -t  rlfps-$ARCH --build-arg DIRS_TO_COPY_ROOT=$DIRS_TO_COPY_ROOT --file="rlfps-docker/$ARCH/Dockerfile" .
 
 else
     echo "image type not found"
