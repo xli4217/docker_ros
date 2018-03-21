@@ -6,23 +6,36 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[ 0]}" )" && pwd )"
 
 DOCKER_DIR="$(dirname "$DIR")"
 
-# this is the image name
-IMAGE_NAME=$1
-
-# this  is the instance name
-INSTANCE_NAME=$2
-
-# this can be cpu or gpu
-ARCH=$3
 
 # this can be "base" or "deploy" or "rlfps"
-IMAGE_TYPE=$4
+IMAGE_TYPE=$1
 
-RLFPS_VOLUME_MAPPING=$5
+# this can be cpu or gpu
+ARCH=$2
+
+# this  is the instance name
+INSTANCE_NAME=$3
+
+RLFPS_VOLUME_MAPPING=$4
+
+
+if [ $IMAGE_TYPE == "base" ]
+then
+    IMAGE_NAME="xli4217/baxter-simulation-$ARCH"
+elif [ $IMAGE_TYPE == "deploy" ]
+then
+    IMAGE_NAME="xli4217/deploy-baxter-simulation-$ARCH"
+elif [ $IMAGE_TYPE == "rlfps" ]
+then
+    IMAGE_NAME="xli4217/rlfps-$ARCH"
+else
+    echo "invalid IMAGE_NAME"
+fi
+
 
 if [ "$1" == "--help" ]
 then
-    echo "Usage: ./run_linux.sh <image_name> <instance_name> <cpu/gpu> <base/deploy/rlfps> <volume mapping from in format host_dir:image_dir (currently only for rlfps)>"
+    echo "Usage: ./run_linux.sh <base/deploy/rlfps> <cpu/gpu> <instance name> <volume mapping from in format host_dir:image_dir (currently only for rlfps)>"
     exit 0
 fi
 

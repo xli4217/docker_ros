@@ -29,7 +29,23 @@ RUN apt-get update && apt-get install -y emacs24 \
                                          mesa-utils \
                                          htop \
                                          iputils-ping \
-                                         tmux
+                                         python-tk \
+                                         tmux \
+                                         build-essential \             
+                                         curl \
+                                         libfreetype6-dev \
+                                         libpng12-dev \
+                                         libzmq3-dev \
+                                         pkg-config \
+                                         python \
+                                         python-dev \
+                                         rsync \
+                                         software-properties-common \
+                                         unzip \
+                                         ffmpeg && \
+                                         apt-get clean
+                                         #rm -rf /var/lib/apt/lists/*
+
 
 
 ######################
@@ -37,21 +53,21 @@ RUN apt-get update && apt-get install -y emacs24 \
 ######################
 
 # Pick up some TF dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \             
-    curl \
-    libfreetype6-dev \
-    libpng12-dev \
-    libzmq3-dev \
-    pkg-config \
-    python \
-    python-dev \
-    rsync \
-    software-properties-common \
-    unzip && \
-    python-tk && \
-    apt-get clean
-    # rm -rf /var/lib/apt/lists/*
+# RUN apt-get update && apt-get install -y --no-install-recommends \
+#     build-essential \             
+#     curl \
+#     libfreetype6-dev \
+#     libpng12-dev \
+#     libzmq3-dev \
+#     pkg-config \
+#     python \
+#     python-dev \
+#     rsync \
+#     software-properties-common \
+#     unzip \
+#     ffmpeg && \
+#     apt-get clean
+#     rm -rf /var/lib/apt/lists/*
 
 
 RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
@@ -105,7 +121,7 @@ RUN cp /root/.bashrc /home/${USER}/.bashrc && \
 # COPY ${DIRS_TO_COPY_ROOT}/rlfps/ /home/${USER}/rlfps/
 
 # run the job
-# CMD ["/bin/bash", "/root/rlfps/scripts/run_job_baxter.sh"]
+# CMD ["/bin/bash", "${HOME}/rlfps/scripts/run_job_baxter.sh"]
 
 
 
