@@ -8,6 +8,10 @@ sudo apt-get install -y python-pip python-dev build-essential
 
 sudo apt-get install -y git tmux emacs24 htop
 
+# configure git
+git config --global user.name "Xiao Li"
+git config --global user.email "xli87@bu.edu"
+
 # clone emacs configs and set up
 cd $HOME
 git clone https://github.com/xli4217/emacs-config.git
