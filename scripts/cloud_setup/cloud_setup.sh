@@ -33,7 +33,7 @@ sudo apt-get remove docker docker-engine docker.io # remove existing docker
 
 sudo apt-get update
 
-sudo apt-get install \
+sudo apt-get install -y \
      apt-transport-https \
      ca-certificates \
      curl \
@@ -50,7 +50,7 @@ sudo add-apt-repository \
 
 sudo apt-get update
 
-sudo apt-get install docker-ce
+sudo apt-get install -y docker-ce
 
 # verify docker 
 sudo docker run hello-world
