@@ -68,6 +68,7 @@ then
                   --volume="/etc/passwd:/etc/passwd:ro" \
                   --volume="/etc/shadow:/etc/shadow:ro" \
                   --volume="/etc/sudoers.d:/etc/sudoers.d:ro" \
+                  --shm-size=8g \
                   -e LOCAL_USER_ID=`id -u $USER` \
                   -e LOCAL_GROUP_ID=`id -g $USER` \
                   -e LOCAL_GROUP_NAME=`id -gn $USER` \
@@ -86,6 +87,7 @@ then
            --volume="/etc/passwd:/etc/passwd:ro" \
            --volume="/etc/shadow:/etc/shadow:ro" \
            --volume="/etc/sudoers.d:/etc/sudoers.d:ro" \
+           --shm-size=8g \
            -e LOCAL_USER_ID=`id -u $USER` \
            -e LOCAL_GROUP_ID=`id -g $USER` \
            -e LOCAL_GROUP_NAME=`id -gn $USER` \

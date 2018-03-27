@@ -63,6 +63,7 @@ elif [ $ARCH == 'cpu' ]
 then
     docker run -it --rm \
            --volume=$VOLUME_MAPPING \
+           --shm-size=8g \
            --name $INSTANCE_NAME $IMAGE_NAME
 else
     echo "Architecture not found!"
