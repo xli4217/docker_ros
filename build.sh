@@ -7,7 +7,7 @@ DIRS_TO_COPY_ROOT=$3 # this is required for "deploy", not necessary for "base"
 
 if [ "$1" == "--help" ]
 then
-    echo "Usage: ./build.sh <deploy/base/rlfps> <gpu/cpu> <DIRS_TO_COPY_ROOT (this is required for deploy and rlfps, not base)>"
+    echo "Usage: ./build.sh <deploy/base/rlfps> <gpu/cpu> <DIRS_TO_COPY_ROOT (this is required for deploy)>"
     exit 0
 fi
 

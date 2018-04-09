@@ -23,7 +23,7 @@ WORKDIR "/home/${USER}"
 # Use Python 3 #
 ################
 RUN apt-get update \
-    && apt-get install -y python3-pip python3-dev \
+    && apt-get install -y python3-pip python3-dev swig\
     && cd /usr/local/bin \
     && ln -s /usr/bin/python3 python \
     && pip3 install --upgrade pip
@@ -52,10 +52,10 @@ RUN apt-get update && apt-get install -y emacs24 \
                                          rsync \
                                          software-properties-common \
                                          unzip \
+                                         git \
                                          ffmpeg && \
                                          apt-get clean
                                          #rm -rf /var/lib/apt/lists/*
-
 
 
 ######################
@@ -84,6 +84,8 @@ RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
     python get-pip.py && \
     rm get-pip.py
 
+RUN pip install pybullet
+
 RUN pip --no-cache-dir install \
         Pillow \
         h5py \
@@ -99,9 +101,10 @@ RUN pip --no-cache-dir install \
         gym \
         cloudpickle \
         scikit-optimize \
-        pybullet \
         tools \
-        && \           
+        fire \
+        box2d \
+        && \             
    python -m ipykernel.kernelspec
 
 RUN pip install tensorflow
