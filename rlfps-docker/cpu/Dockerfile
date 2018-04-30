@@ -53,6 +53,9 @@ RUN apt-get update && apt-get install -y emacs24 \
                                          software-properties-common \
                                          unzip \
                                          git \
+                                         python3-tk \
+                                         #xvfb \
+                                         #xorg \
                                          ffmpeg && \
                                          apt-get clean
                                          #rm -rf /var/lib/apt/lists/*
@@ -99,15 +102,39 @@ RUN pip --no-cache-dir install \
         joblib \
         plotly \
         gym \
+        pydot \
+        visdom \
+        antlr4-python3-runtime \
         cloudpickle \
         scikit-optimize \
         tools \
         fire \
         box2d \
+        ai2thor \
+        networkx \
         && \             
    python -m ipykernel.kernelspec
 
 RUN pip install tensorflow
+
+###########
+# AI2Thor #
+###########
+# RUN apt-get update && apt-get -y upgrade
+# RUN apt-get -y install xserver-xorg-core \
+#                        xserver-xorg-video-dummy \
+#                        libxcursor1 \
+#                        x11vnc \
+#                        unzip \
+#                        pciutils \
+#                        software-properties-common \
+#                        kmod \
+#                        gcc \
+#                        make \
+#                        linux-headers-generic\
+#                        wget
+
+
 
 ###############
 # Install Ray #
