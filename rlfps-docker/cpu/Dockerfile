@@ -103,7 +103,8 @@ RUN pip --no-cache-dir install \
         plotly \
         gym \
         pydot \
-        visdom \
+        pydotplus \
+        visdom \          
         antlr4-python3-runtime \
         cloudpickle \
         scikit-optimize \
@@ -111,7 +112,7 @@ RUN pip --no-cache-dir install \
         fire \
         box2d \
         ai2thor \
-        networkx \
+        networkx==1.11 \
         && \             
    python -m ipykernel.kernelspec
 
@@ -140,6 +141,20 @@ RUN pip install tensorflow
 # Install Ray #
 ###############
 RUN pip install ray
+
+
+################
+# Install Spot # 
+################
+# RUN wget http://www.lrde.epita.fr/dload/spot/spot-2.5.3.tar.gz && \
+#     tar -xzf spot-2.5.3.tar.gz && \
+#     cd spot-2.5.3 && \
+#     ./configure && make && make install
+
+RUN wget -q -O - https://www.lrde.epita.fr/repo/debian.gpg | apt-key add - && \
+    echo 'deb http://www.lrde.epita.fr/repo/debian/ stable/' >> /etc/apt/sources.list && \
+    apt-get update && \
+    apt-get install spot libspot-dev spot-doc python3-spot # Or a subset of those
 
 ########
 # Misc #
