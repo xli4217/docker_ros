@@ -54,7 +54,7 @@ RUN apt-get update && apt-get install -y emacs24 \
                                          unzip \
                                          git \
                                          python3-tk \
-                                         #xvfb \
+                                         xvfb \
                                          #xorg \
                                          ffmpeg && \
                                          apt-get clean
@@ -154,7 +154,7 @@ RUN pip install ray
 RUN wget -q -O - https://www.lrde.epita.fr/repo/debian.gpg | apt-key add - && \
     echo 'deb http://www.lrde.epita.fr/repo/debian/ stable/' >> /etc/apt/sources.list && \
     apt-get update && \
-    apt-get install spot libspot-dev spot-doc python3-spot # Or a subset of those
+    apt-get -y install spot libspot-dev spot-doc python3-spot # Or a subset of those
 
 ########
 # Misc #
