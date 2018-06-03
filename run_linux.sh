@@ -40,7 +40,8 @@ then
 fi
 
 
-BASE_VOLUME_MAPPING="$DOCKER_DIR/docker_home/:/home/$USER/"
+#BASE_VOLUME_MAPPING="$DOCKER_DIR/docker_home/:/home/$USER/"
+BASE_VOLUME_MAPPING=$4
 DEPLOY_VOLUME_MAPPING="$DOCKER_DIR/experiments/:/root/experiments/"
 
 if [ $IMAGE_TYPE == "base" ] 

@@ -78,34 +78,11 @@ RUN apt-get install -y ros-kinetic-gazebo-ros-pkgs \
                        ros-kinetic-tf-conversions\
                        ros-kinetic-kdl-parser\
                        ros-kinetic-moveit
-                       
-# Putting stuff in bashrc
-RUN echo "source /opt/ros/kinetic/setup.bash" >> /root/.bashrc && \
-    echo "alias em='emacs -nw'" >> /root/.bashrc && \
-    echo "source $HOME/rlfps/setup_pythonpath.sh" >> /root/.bashrc
-    
+                           
 
 ######################
 # Install Tensorflow #
 ######################
-
-# Pick up some TF dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \             
-    curl \
-    libfreetype6-dev \
-    libpng12-dev \
-    libzmq3-dev \
-    pkg-config \
-    python \
-    python-dev \
-    rsync \
-    software-properties-common \
-    unzip && \
-    apt-get clean
-    # rm -rf /var/lib/apt/lists/*
-
-
 RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
     python get-pip.py && \
     rm get-pip.py
@@ -123,17 +100,34 @@ RUN pip --no-cache-dir install \
         joblib \
         plotly \
         gym \
+        pydot \
+        pydotplus \
+        visdom \          
+        # antlr4-python3-runtime \
         cloudpickle \
         scikit-optimize \
-        && \           
+        tools \
+        fire \
+        # box2d \
+        # ai2thor \
+        networkx==1.11 \
+        && \             
    python -m ipykernel.kernelspec
 
-# Install TensorFlow CPU version from central repo
-# RUN pip --no-cache-dir install \
-#   http://storage.googleapis.com/tensorflow/linux/${TENSORFLOW_ARCH}/tensorflow-${TENSORFLOW_VERSION}-cp27-none-linux_x86_64.whl
+# RUN pip install tensorflow
 
-# TODO: this is currently not controllable and is tf1.4, make use of the TENSORFLOW_VERSION argument
-RUN pip install tensorflow 
+################
+# Install Spot # 
+################
+# RUN wget http://www.lrde.epita.fr/dload/spot/spot-2.5.3.tar.gz && \
+#     tar -xzf spot-2.5.3.tar.gz && \
+#     cd spot-2.5.3 && \
+#     ./configure && make && make install
+
+RUN wget -q -O - https://www.lrde.epita.fr/repo/debian.gpg | apt-key add - && \
+    echo 'deb http://www.lrde.epita.fr/repo/debian/ stable/' >> /etc/apt/sources.list && \
+    apt-get update && \
+    apt-get -y install spot libspot-dev spot-doc python3-spot # Or a subset of those
 
 
 ###############
@@ -154,13 +148,19 @@ ENV PYTHONPATH $HOME/parallel_baxter_ws/baxter_bridge:${PYTHONPATH}
 # -------------------------------------------
 # dependency for baxter bridge
 # -------------------------------------------
-RUN pip install zmq protobuf
+# RUN pip install zmq protobuf
 
 # Source setup.bash
 # SHELL ["/bin/bash", "-c"]
 # RUN source /root/.bashrc
 
+# Putting stuff in bashrc
+RUN echo "alias em='emacs -nw'" >> /root/.bashrc && \
+    echo "source $HOME/rlfps/setup_pythonpath.sh" >> /root/.bashrc && \
+    echo "source /opt/ros/kinetic/setup.bash" >> /root/.bashrc 
+
 # copy bashrc
-RUN cp /root/.bashrc /home/${USER}/.bashrc
+RUN cp /root/.bashrc /home/${USER}/.bashrc && \
+    mkdir /home/${USER}/rlfps/
 
 #CMD ['source', '/opt/ros/kinetic/setup.bash']
