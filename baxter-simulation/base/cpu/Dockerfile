@@ -45,7 +45,8 @@ RUN apt-get update && apt-get install -y emacs24 \
                                          mesa-utils \
                                          htop \
                                          iputils-ping \
-                                         tmux
+                                         tmux \
+                                         libqwt-dev
                                          
 ##############
 # update gcc #
