@@ -45,8 +45,8 @@ RUN apt-get update && apt-get install -y emacs24 \
                                          mesa-utils \
                                          htop \
                                          iputils-ping \
-                                         tmux
-
+                                         tmux \
+                                         libqwt-dev 
                                          
 ##############
 # update gcc #
@@ -81,9 +81,9 @@ RUN apt-get install -y ros-kinetic-gazebo-ros-pkgs \
                        
 
 # Putting stuff in bashrc
-RUN echo "source /opt/ros/kinetic/setup.bash" >> /root/.bashrc && \
-    echo "alias em='emacs -nw'" >> /root/.bashrc && \
-    echo "source $HOME/rlfps/setup_pythonpath.sh" >> /root/.bashrc
+#RUN echo "source /opt/ros/kinetic/setup.bash" >> /root/.bashrc && \
+#    echo "alias em='emacs -nw'" >> /root/.bashrc && \
+#    echo "source $HOME/rlfps/setup_pythonpath.sh" >> /root/.bashrc
     
 
 ######################
@@ -106,6 +106,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     apt-get clean
     # rm -rf /var/lib/apt/lists/*
 
+RUN apt-get remove --auto-remove python-enum34
 
 RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
     python get-pip.py && \
@@ -123,9 +124,19 @@ RUN pip --no-cache-dir install \
         sklearn \
         joblib \
         plotly \
+        gym \
+        pydot \
+        pydotplus \
+        visdom \          
+        # antlr4-python3-runtime \
         cloudpickle \
         scikit-optimize \
-        && \           
+        tools \
+        fire \
+        # box2d \
+        # ai2thor \
+        networkx==1.11 \
+        && \             
    python -m ipykernel.kernelspec
 
 # Install TensorFlow CPU version from central repo
@@ -133,17 +144,12 @@ RUN pip --no-cache-dir install \
 #   http://storage.googleapis.com/tensorflow/linux/${TENSORFLOW_ARCH}/tensorflow-${TENSORFLOW_VERSION}-cp27-none-linux_x86_64.whl
 
 # TODO: this is currently not controllable and is tf1.4, make use of the TENSORFLOW_VERSION argument
-RUN pip install tensorflow 
+RUN pip install tensorflow-gpu==1.7.0 
 
-
-#######################
-# Nvidia docker hooks #
-#######################
-
-# nvidia-docker hooks
-LABEL com.nvidia.volumes.needed="nvidia_driver"
-ENV PATH /usr/local/nvidia/bin:${PATH}
-ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64:${LD_LIBRARY_PATH}
+RUN wget -q -O - https://www.lrde.epita.fr/repo/debian.gpg | apt-key add - && \
+    echo 'deb http://www.lrde.epita.fr/repo/debian/ stable/' >> /etc/apt/sources.list && \
+    apt-get update && \
+    apt-get -y install spot libspot-dev spot-doc python3-spot # Or a subset of those
 
 
 ###############
@@ -181,7 +187,13 @@ RUN pip install zmq protobuf
 # SHELL ["/bin/bash", "-c"]
 # RUN source /root/.bashrc
 
+# Putting stuff in bashrc
+RUN echo "alias em='emacs -nw'" >> /root/.bashrc && \
+    echo "source $HOME/rlfps/setup_pythonpath.sh" >> /root/.bashrc && \
+    echo "source /opt/ros/kinetic/setup.bash" >> /root/.bashrc 
+
 # copy bashrc
-RUN cp /root/.bashrc /home/${USER}/.bashrc
+RUN cp /root/.bashrc /home/${USER}/.bashrc && \
+    mkdir /home/${USER}/rlfps/
 
 #CMD ['source', '/opt/ros/kinetic/setup.bash']
