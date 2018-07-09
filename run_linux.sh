@@ -25,6 +25,9 @@ then
 elif [ $IMAGE_TYPE == "deploy" ]
 then
     IMAGE_NAME="xli4217/deploy-baxter-simulation-$ARCH"
+elif [ $IMAGE_TYPE == "vrep" ]
+then
+    IMAGE_NAME="xli4217/vrep-$ARCH"
 elif [ $IMAGE_TYPE == "rlfps" ]
 then
     IMAGE_NAME="xli4217/rlfps-$ARCH"
@@ -48,6 +51,9 @@ if [ $IMAGE_TYPE == "base" ]
 then
     VOLUME_MAPPING=$BASE_VOLUME_MAPPING
 elif [ $IMAGE_TYPE == "rlfps" ]
+then
+    VOLUME_MAPPING=$RLFPS_VOLUME_MAPPING
+elif [ $IMAGE_TYPE == "vrep" ]
 then
     VOLUME_MAPPING=$RLFPS_VOLUME_MAPPING
 else

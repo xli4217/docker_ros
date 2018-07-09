@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IMAGE=$1 # this can be "deploy" or "base" or "rlfps"
+IMAGE=$1 # this can be "deploy" or "base" or "rlfps" or "vrep"
 ARCH=$2 # this can be "gpu" or "cpu"
 DIRS_TO_COPY_ROOT=$3 # this is required for "deploy", not necessary for "base"
 
@@ -18,6 +18,10 @@ then
 elif [ $IMAGE == 'deploy' ]
 then
     docker build --rm -t  xli4217/deploy-baxter-simulation-$ARCH --build-arg DIRS_TO_COPY_ROOT=$DIRS_TO_COPY_ROOT --file="baxter-simulation/deploy/$ARCH/Dockerfile" .
+
+elif [ $IMAGE == 'vrep' ]
+then
+    docker build --rm -t  xli4217/vrep-$ARCH --build-arg DIRS_TO_COPY_ROOT=$DIRS_TO_COPY_ROOT --file="vrep-docker/$ARCH/Dockerfile" .
 
 elif [ $IMAGE == 'rlfps' ]
 then
