@@ -19,7 +19,7 @@ ENV USER ${USER}
 WORKDIR "/home/${USER}"
 
 # Copy VRep
-# COPY ${DIRS_TO_COPY_ROOT}/V-REP/ /home/${USER}/V-REP/
+COPY ${DIRS_TO_COPY_ROOT}/V-REP/ /home/V-REP/
 
 #################
 # install tools #
