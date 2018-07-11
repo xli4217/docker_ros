@@ -6,6 +6,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[ 0]}" )" && pwd )"
 
 DOCKER_DIR="$(dirname "$DIR")"
 
+
 # this can be "base" or "deploy" or "rlfps"
 IMAGE_TYPE=$1
 
@@ -24,6 +25,9 @@ then
 elif [ $IMAGE_TYPE == "deploy" ]
 then
     IMAGE_NAME="xli4217/deploy-baxter-simulation-$ARCH"
+elif [ $IMAGE_TYPE == "vrep" ]
+then
+    IMAGE_NAME="xli4217/vrep-$ARCH"
 elif [ $IMAGE_TYPE == "rlfps" ]
 then
     IMAGE_NAME="xli4217/rlfps-$ARCH"
@@ -38,14 +42,18 @@ then
     exit 0
 fi
 
-BASE_VOLUME_MAPPING="$DOCKER_DIR/docker_home/:/home/$USER/"
-DEPLOY_VOLUME_MAPPING="$DOCKER_DIR/experiments/:/root/experiments/"
 
+#BASE_VOLUME_MAPPING="$DOCKER_DIR/docker_home/:/home/$USER/"
+BASE_VOLUME_MAPPING=$4
+DEPLOY_VOLUME_MAPPING="$DOCKER_DIR/experiments/:/root/experiments/"
 
 if [ $IMAGE_TYPE == "base" ] 
 then
     VOLUME_MAPPING=$BASE_VOLUME_MAPPING
 elif [ $IMAGE_TYPE == "rlfps" ]
+then
+    VOLUME_MAPPING=$RLFPS_VOLUME_MAPPING
+elif [ $IMAGE_TYPE == "vrep" ]
 then
     VOLUME_MAPPING=$RLFPS_VOLUME_MAPPING
 else
@@ -61,14 +69,20 @@ then
 
 elif [ $ARCH == 'cpu' ]
 then
+    ip=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
+    xhost + $ip
     docker run -it --rm \
            --volume=$VOLUME_MAPPING \
            --shm-size=8g \
+           -e DISPLAY=$ip:0 \
+           -v /tmp/.X11-unix:/tmp/.X11-unix \
+           --privileged \
            --name $INSTANCE_NAME $IMAGE_NAME
 else
     echo "Architecture not found!"
 fi
 
+xhost - $ip
 
 # docker run -it \
 #        --rm \
