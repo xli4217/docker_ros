@@ -1,4 +1,4 @@
-FROM xli4217:basic
+FROM xli4217/basic:latest
 
 ENV DEBIAN_FRONTEND noninteractive
 

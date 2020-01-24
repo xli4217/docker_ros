@@ -38,7 +38,18 @@ RUN apt-get update && apt-get install -y emacs24 \
                                          && rm -rf /var/lib/apt/lists/*
 
 #### Install Python ####
-RUN apt-get install -y python-pip python-dev build-essential
+RUN apt-get update \
+    && add-apt-repository ppa:deadsnakes/ppa \
+    && apt-get update \
+    && apt-get install --no-install-recommends -y \
+    python3.7 \
+    python3-pip \
+    python3-dev \
+    python \
+    python-pip \
+    python-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 
 ########
 # Misc #
