@@ -50,6 +50,11 @@ RUN apt-get update \
     python-dev \
     && rm -rf /var/lib/apt/lists/*
 
+#### Use Python 3 ####
+RUN cd /usr/local/bin \
+    && ln -s /usr/bin/python3 python \
+    && pip3 install --upgrade pip
+
 
 ########
 # Misc #
