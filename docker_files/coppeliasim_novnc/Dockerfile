@@ -37,9 +37,9 @@ RUN echo "export COPPELIASIM_ROOT=/home/xli4217/CoppeliaSim_Edu_V4_0_0_Ubuntu16.
     echo "export QT_QPA_PLATFORM_PLUGIN_PATH=/home/xli4217/CoppeliaSim_Edu_V4_0_0_Ubuntu16.04/" >> /root/.bashrc
    
 ### this is for installation
-ENV COPPELIASIM_ROOT="/home/xli4217/CoppeliaSim_Edu_V4_0_0_Ubuntu16.04/"
-ENV LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$COPPELIASIM_ROOT"
-ENV QT_QPA_PLATFORM_PLUGIN_PATH="$COPPELIASIM_ROOT"
+ENV COPPELIASIM_ROOT=/home/xli4217/CoppeliaSim_Edu_V4_0_0_Ubuntu16.04/
+ENV LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${COPPELIASIM_ROOT}
+ENV QT_QPA_PLATFORM_PLUGIN_PATH=${COPPELIASIM_ROOT}
 
 RUN cd /home/xli4217/PyRep/ && \
     pip3 install -r requirements.txt && \
