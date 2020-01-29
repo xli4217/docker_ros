@@ -41,3 +41,6 @@ RUN mv /usr/local/lib/lib* /usr/lib/ && \
     mv /usr/local/lib/python3.7/site-packages/spot /home/xli4217/miniconda3/envs/rlfps_env/lib/python3.7/site-packages/ 
 
 #### Install Gurobi (this requires activation on a school network) ####
+
+#### Install addtional python packages ####
+RUN pip install ray sacred
